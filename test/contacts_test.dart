@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +9,7 @@ void main() {
   const MethodChannel channel =
       MethodChannel('github.com/clovisnicolas/flutter_contacts');
   final List<MethodCall> log = <MethodCall>[];
-  channel.setMockMethodCallHandler((MethodCall methodCall) async {
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (MethodCall methodCall) async {
     log.add(methodCall);
     switch (methodCall.method) {
       case 'getContacts':
@@ -35,7 +34,6 @@ void main() {
         return null;
     }
   });
-
   tearDown(() {
     log.clear();
   });
